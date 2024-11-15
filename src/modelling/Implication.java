@@ -10,7 +10,7 @@ public class Implication implements Constraint {
 
     public Implication(Variable v1, Set<Object> s1, Variable v2, Set<Object> s2) {
         if(!v1.getDomain().containsAll(s1) || !v2.getDomain().containsAll(s2)){
-            throw new IllegalArgumentException("Sub domain must be includ in variables doamin");
+            throw new IllegalArgumentException("Sub domain must be includ in variables domain");
         }else{
             this.v1 = v1;
             this.s1 = s1;
