@@ -1,17 +1,16 @@
 package blocksworld;
 
 import java.util.*;
-
 import modelling.*;
 
 /**
- * The BWBasicConstraintsBuilder class models essential constraints in the
- * context of the Blocks World problem. It manages the creation of variables 
- * and defines the constraints that apply between blocks and stacks in the model.
- * 
- * This class incorporates constraints such as {@link OnDifferenceConstraint},
- * {@link FixedConstraint}, and {@link FreeConstraint} to control block placement
- * and movement within the Blocks World simulation.
+ * The {@code BWBasicConstraintsBuilder} class is responsible for defining 
+ * fundamental constraints in the Blocks World model. These constraints ensure 
+ * that blocks and stacks interact correctly, following the specified rules:
+ * <ul>
+ *   <li>Blocks cannot overlap (difference constraints).</li>
+ *   <li>Fixed and free stack conditions are properly enforced.</li>
+ * </ul>
  */
 public class BWBasicConstraintsBuilder {
     private Set<Variable> variables;
@@ -20,17 +19,16 @@ public class BWBasicConstraintsBuilder {
     private int nbStacks;
 
     /**
-     * Constructs a BWBasicConstraintsBuilder instance with a specified number
-     * of blocks and stacks. Initializes the block and stack variables, and
-     * generates the corresponding constraints automatically.
-     * 
-     * @param nbBlocks The total number of blocks in the Blocks World simulation.
-     * @param nbStacks The total number of stacks available in the simulation.
-     * @throws IllegalArgumentException if the number of blocks is negative
-     *         or the number of stacks is non-positive.
+     * Constructs a {@code BWBasicConstraintsBuilder} instance with a specified 
+     * number of blocks and stacks. It initializes the variables and generates the 
+     * basic constraints required for the Blocks World model.
+     *
+     * @param nbBlocks the number of blocks in the model.
+     * @param nbStacks the number of stacks in the model.
+     * @throws IllegalArgumentException if the number of blocks or stacks is negative or zero.
      */
     public BWBasicConstraintsBuilder(int nbBlocks, int nbStacks) {
-        if(nbBlocks < 0 || nbStacks < 0){
+        if (nbBlocks < 0 || nbStacks < 0) {
             throw new IllegalArgumentException("The number of blocks or stacks cannot be negative or zero.");
         }
         BWVariablesBuilder bwvariables = new BWVariablesBuilder(nbBlocks, nbStacks);
@@ -42,42 +40,48 @@ public class BWBasicConstraintsBuilder {
     }
 
     /**
-     * Creates the basic constraints that govern relationships between
-     * block and stack variables in the Blocks World model.
+     * Defines the basic constraints for the Blocks World model.
+     * <p>
+     * The constraints include:
      * <ul>
-     * <li>{@link OnDifferenceConstraint}: Ensures that two blocks cannot share
-     *      the same "on" position.</li>
-     * <li>{@link FixedConstraint}: Associates a block's position with its "fixed" 
-     *      variable to maintain placement constraints.</li>
-     * <li>{@link FreeConstraint}: Links a block's position with the "free" status 
-     *      of a stack.</li>
+     *   <li><b>Difference Constraints</b>: Ensures that two blocks cannot occupy 
+     *       the same position in a stack.</li>
+     *   <li><b>Fixed Constraints</b>: If a block <i>a</i> is placed on another block 
+     *       <i>b</i>, the <i>fixed</i> variable of block <i>b</i> must be <code>true</code>.</li>
+     *   <li><b>Free Constraints</b>: If a block is placed on a stack, the <i>free</i> 
+     *       variable of the stack must be <code>false</code>.</li>
      * </ul>
      */
     private void createConstraints() {
-        // Création des contraintes de type OnDifferenceConstraint pour assurer l'unicité des positions "on"
         for (Variable i : this.variables) {
             if (Variable.isBlockOnVariable(i)) {
                 for (Variable j : this.variables) {
                     if (Variable.isBlockOnVariable(j) && !i.equals(j)) {
+
                         this.constraints.add(new DifferenceConstraint(i, j));
                     }
                 }
             }
         }
 
-        // Création des contraintes de type FixedConstraint et FreeConstraint pour la gestion des positions fixes et libres
         for (Variable i : this.variables) {
             if (Variable.isBlockOnVariable(i)) {
                 for (Variable j : this.variables) {
                     if (BooleanVariable.isBlockFixedVariable(j) && !i.getName().equals(j.getName())) {
-                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
-                        Set<Object> s2 = new HashSet<>();s2.add(true);
-                        this.constraints.add(new Implication(i,s1,j,s2));//new  FixedConstraint(i, j)
+
+                        Set<Object> s1 = new HashSet<>();
+                        s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();
+                        s2.add(true);
+                        this.constraints.add(new Implication(i, s1, j, s2));
                     }
                     if (BooleanVariable.isStackFreeVariable(j)) {
-                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
-                        Set<Object> s2 = new HashSet<>();s2.add(false);
-                        this.constraints.add(new Implication(i,s1,j,s2));//new  FreeConstraint(i, j)
+
+                        Set<Object> s1 = new HashSet<>();
+                        s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();
+                        s2.add(false);
+                        this.constraints.add(new Implication(i, s1, j, s2));
                     }
                 }
             }
@@ -85,28 +89,26 @@ public class BWBasicConstraintsBuilder {
     }
 
     /**
-     * Returns the set of constraints defined between blocks and stacks.
-     * 
-     * @return A set of constraints that includes OnDifferenceConstraint, 
-     *         FixedConstraint, and FreeConstraint.
+     * Retrieves the set of constraints defined for the Blocks World model.
+     * @return a set of constraints defined in the model.
      */
     public Set<Constraint> getConstraints() {
         return constraints;
     }
 
     /**
-     * Returns the total number of blocks in the model.
+     * Gets the number of blocks in the model.
      * 
-     * @return The number of blocks.
+     * @return the total number of blocks.
      */
     public int getNbBlocks() {
         return nbBlocks;
     }
 
     /**
-     * Returns the total number of stacks in the model.
+     * Gets the number of stacks in the model.
      * 
-     * @return The number of stacks.
+     * @return the total number of stacks.
      */
     public int getNbStacks() {
         return nbStacks;

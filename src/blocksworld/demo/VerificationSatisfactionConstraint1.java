@@ -10,7 +10,7 @@ import java.util.Set;
 import blocksworld.BWBasicConstraintsBuilder;
 import blocksworld.BWCroissanceConstraintsBuilder;
 import blocksworld.BWRegularyConstraintsBuilder;
-import blocksworld.Function;
+import blocksworld.utils.Function;
 import modelling.*;
 
 public class VerificationSatisfactionConstraint1 {

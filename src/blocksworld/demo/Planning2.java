@@ -3,8 +3,7 @@ package blocksworld.demo;
 import java.util.*;
 
 import blocksworld.*;
-
-import java.time.*;
+import blocksworld.utils.Function;
 import modelling.*;
 import planning.*;
 
@@ -143,6 +142,6 @@ public class Planning2{
         System.out.println("⏳ Nombre de noeuds explorés : " + aStarPlanner.getNbNoeudExplore() + "\n");
 
        Function.displayPlan(initState, 4, plan);
-      // System.out.println(plan);
+       System.out.println(plan);
     }
 }

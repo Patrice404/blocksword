@@ -1,38 +1,31 @@
 package blocksworld;
 
 import java.util.*;
-
 import modelling.*;
 
 /**
- * Builds "regularity" constraints for a Blocks World model, enforcing a specified
- * condition on the relationships between all pairs of block variables.
- * <p>
- * This class initializes {@link Variable} objects for each variable in the model
- * and applies {@link RegularyConstraint} constraints to enforce regularity conditions
- * based on a specified expected difference between blocks in the model.
- * </p>
+ * The {@code BWRegularyConstraintsBuilder} class is responsible for creating 
+ * regularity constraints for the Blocks World model. These constraints enforce 
+ * rules about how blocks can be positioned relative to each other within a 
+ * defined set of stacks.
  */
 public class BWRegularyConstraintsBuilder {
     private Set<Variable> variables;
     private Set<Constraint> constraints;
     private int nbBlocks;
     private int nbStacks;
-    private int differentExpected;
 
     /**
-     * Constructs a BWRegularyConstraintsBuilder for a Blocks World model with a
-     * specified number of blocks and stacks. Initializes the regularity constraints
-     * by setting the expected difference between blocks.
+     * Constructs a {@code BWRegularyConstraintsBuilder} instance with a specified 
+     * number of blocks and stacks. The constructor initializes the model variables 
+     * and generates constraints based on predefined rules.
      *
-     * @param nbBlocks          The total number of blocks in the model.
-     * @param nbStacks          The total number of stacks (or piles) in the model.
-     
-     * @throws IllegalArgumentException if the number of blocks is negative or
-     *         the number of stacks is zero or negative.
+     * @param nbBlocks the number of blocks in the Blocks World model.
+     * @param nbStacks the number of stacks in the Blocks World model.
+     * @throws IllegalArgumentException if the number of blocks or stacks is negative.
      */
     public BWRegularyConstraintsBuilder(int nbBlocks, int nbStacks) {
-        if (nbBlocks < 0 || nbStacks < 0 || differentExpected < 0 ) {
+        if (nbBlocks < 0 || nbStacks < 0) {
             throw new IllegalArgumentException("The number of blocks or stacks cannot be negative.");
         }
         this.nbBlocks = nbBlocks;
@@ -43,30 +36,37 @@ public class BWRegularyConstraintsBuilder {
         this.variables = bwvariables.getVariables();
         this.constraints = new HashSet<>();
         createConstraints();
-        //System.err.println(constraints);
     }
 
     /**
-     * Creates regularity constraints between all pairs of "block on" variables,
-     * ensuring that each pair of distinct block variables has a {@link RegularyConstraint}
-     * added to enforce the specified expected difference between the blocks.
+     * Creates the regularity constraints for the Blocks World model.
+     * <p>
+     * The constraints define valid configurations of blocks. Specifically:
+     * <ul>
+     *     <li>If a block is on another block, the block below is restricted in terms 
+     *     of which other blocks it can be positioned on, based on a calculated difference.</li>
+     *     <li>Ensures consistency in the domain values of related variables.</li>
+     * </ul>
      */
     private void createConstraints() {
         for (Variable i : this.variables) {
             if (Variable.isBlockOnVariable(i)) {
                 for (Variable j : this.variables) {
                     if (Variable.isBlockOnVariable(j)) {
-                        if (i.getName()!=j.getName()) {
+                        if (i.getName() != j.getName()) {
                             Set<Object> s1 = new HashSet<>();
                             s1.add(j.getName());
                             Set<Object> s2 = new HashSet<>(j.getDomain());
                             s2.remove(i.getName());
-                            for(int k=0; k<this.nbBlocks; k++){
-                                if(Math.abs(k-j.getName())!=Math.abs(i.getName()-j.getName())){
+
+                            // Si un bloc a est posé sur un autre b, b ne peut être poser que 
+                            // sur un bloc c dont b-c = a-b
+                            int ecart = i.getName() - j.getName();
+                            for (int k = 0; k < this.nbBlocks; k++) {
+                                if (j.getName() - k != ecart) {
                                     s2.remove(k);
                                 }
                             }
-
                             this.constraints.add(new Implication(i, s1, j, s2));
                         }
                     }
@@ -77,9 +77,11 @@ public class BWRegularyConstraintsBuilder {
 
     /**
      * Returns the set of regularity constraints created for the Blocks World model.
+     * <p>
+     * These constraints ensure that the relationships between blocks adhere to 
+     * predefined rules about how blocks can be stacked and positioned.
      *
-     * @return A set containing all the regularity constraints that enforce the 
-     *         expected difference rule between block variables.
+     * @return a set containing all the regularity constraints.
      */
     public Set<Constraint> getConstraints() {
         return constraints;
@@ -88,7 +90,7 @@ public class BWRegularyConstraintsBuilder {
     /**
      * Returns the total number of blocks in the model.
      *
-     * @return The number of blocks.
+     * @return the number of blocks.
      */
     public int getNbBlocks() {
         return nbBlocks;
@@ -97,19 +99,9 @@ public class BWRegularyConstraintsBuilder {
     /**
      * Returns the total number of stacks in the model.
      *
-     * @return The number of stacks.
+     * @return the number of stacks.
      */
     public int getNbStacks() {
         return nbStacks;
-    }
-
-    /**
-     * Returns the expected difference value that the regularity constraints enforce
-     * between block variables.
-     *
-     * @return The expected difference for the regularity constraint.
-     */
-    public int getDifferentExpected() {
-        return differentExpected;
     }
 }

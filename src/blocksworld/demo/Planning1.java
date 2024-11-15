@@ -3,6 +3,7 @@ package blocksworld.demo;
 import java.util.*;
 
 import blocksworld.*;
+import blocksworld.utils.Function;
 import modelling.*;
 import planning.*;
 

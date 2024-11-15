@@ -86,11 +86,11 @@ public class BWVariablesBuilder {
     public static Set<Object> calculDomain(int id, int nbBlocks, int nbStacks) {
         Set<Object> domain = new HashSet<>();
         for (int i = 1; i <= nbStacks; i++) {
-            domain.add(-i); // Negative IDs for stacks
+            domain.add(-i); 
         }
         for (int i = 0; i < nbBlocks; i++) {
             if (i != id) {
-                domain.add(i); // IDs of other blocks
+                domain.add(i); 
             }
         }
         return domain;

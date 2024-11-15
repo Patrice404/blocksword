@@ -1,12 +1,15 @@
 package blocksworld;
 
 import java.util.*;
-
 import modelling.*;
 
 /**
- * Builds growth (or ordering) constraints for a Blocks World model,
- * enforcing that blocks are arranged in ascending order across specified stacks.
+ * The {@code BWCroissanceConstraintsBuilder} class is responsible for creating
+ * constraints in the Blocks World model that enforce a rule of growth or
+ * ordering
+ * among blocks. This ensures that blocks can only be placed on blocks with
+ * lower
+ * indices, enforcing a structured stacking order.
  */
 public class BWCroissanceConstraintsBuilder {
     private Set<Variable> variables;
@@ -15,18 +18,21 @@ public class BWCroissanceConstraintsBuilder {
     private int nbStacks;
 
     /**
-     * Constructs a BWCroissanceConstraintsBuilder for a Blocks World model
-     * with a specified number of blocks and stacks. Initializes the variables 
-     * and sets up ordering constraints to enforce growth rules between blocks.
+     * Constructs a {@code BWCroissanceConstraintsBuilder} instance with the
+     * specified
+     * number of blocks and stacks. It initializes the variables and generates
+     * constraints
+     * to enforce a rule that higher-indexed blocks cannot be placed on
+     * lower-indexed blocks.
      *
-     * @param nbBlocks The total number of blocks in the model.
-     * @param nbStacks The total number of stacks (or piles) available in the model.
-     * @throws IllegalArgumentException if the number of blocks is negative
-     *         or the number of stacks is negative.
+     * @param nbBlocks the number of blocks in the model.
+     * @param nbStacks the number of stacks in the model.
+     * @throws IllegalArgumentException if the number of blocks or stacks is
+     *                                  negative.
      */
     public BWCroissanceConstraintsBuilder(int nbBlocks, int nbStacks) {
         if (nbBlocks < 0 || nbStacks < 0) {
-            throw new IllegalArgumentException("The number of blocks or stacks cannot be negative.");
+            throw new IllegalArgumentException("The number of blocks or stacks can't be negative.");
         }
         this.nbBlocks = nbBlocks;
         this.nbStacks = nbStacks;
@@ -34,42 +40,40 @@ public class BWCroissanceConstraintsBuilder {
     }
 
     /**
-     * Creates ordering constraints between all pairs of "block on" variables.
+     * Creates constraints for the Blocks World model that enforce a "growth" rule.
      * <p>
-     * For each distinct pair of block variables, adds a {@link CroissantConstraint}
-     * to the constraints set to ensure that blocks follow an ascending order 
-     * across the stacks.
+     * The constraints ensure that:
+     * <ul>
+     * <li>Each block can only be placed on blocks with lower indices.</li>
+     * <li>The domain of variables representing block placement is adjusted to
+     * remove
+     * invalid configurations.</li>
+     * </ul>
+     * This enforces a structured stacking order among the blocks.
      */
     private void createConstraints() {
         BWVariablesBuilder bwvariables = new BWVariablesBuilder(nbBlocks, nbStacks);
         this.variables = bwvariables.getVariables();
         this.constraints = new HashSet<>();
-        
+
         for (Variable i : this.variables) {
             if (Variable.isBlockOnVariable(i)) {
-                Set<Object> s = new HashSet<>( i.getDomain());
-                for(int k=nbBlocks; k>=(int)i.getName();k--){
+                Set<Object> s = new HashSet<>(i.getDomain());
+                // Forcer les block a se poser que sur des block d'id plus petit
+
+                for (int k = nbBlocks; k >= (int) i.getName(); k--) {
                     s.remove(k);
                 }
-                this.constraints.add(new Implication(i, i.getDomain(), i, s) );
-
-               /* for (Variable j : this.variables) {
-                    if (Variable.isBlockOnVariable(j) && !i.equals(j) && i.getName()>j.getName()) {
-                        Set<Object> s1 = new HashSet<>();
-                        s1.add(j.getName());
-                        Set<Object> s2 = BWVariablesBuilder.calculDomain(j.getName(), nbBlocks, nbStacks);
-                        for(int k=nbBlocks; k>=(int)j.getName();k--){
-                            s2.remove(k);
-                        }
-                        this.constraints.add(new Implication(i, s1, j, s2) );
-                    }
-                }*/
+                this.constraints.add(new Implication(i, i.getDomain(), i, s));
             }
         }
     }
 
     /**
      * Returns the set of constraints created for this Blocks World model.
+     * <p>
+     * These constraints enforce the rule that blocks can only be placed on blocks
+     * with lower indices, ensuring a structured growth in the stack.
      *
      * @return A set containing all constraints enforcing the block ordering rules.
      */

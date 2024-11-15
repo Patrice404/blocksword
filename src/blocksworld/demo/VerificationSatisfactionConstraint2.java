@@ -3,10 +3,11 @@ package blocksworld.demo;
 import java.util.*;
 
 import blocksworld.*;
+import blocksworld.utils.Function;
 import modelling.*;
 
 public class VerificationSatisfactionConstraint2 {
-     public static void main(String[] args) {
+    public static void main(String[] args) {
         //Monde créé à la main
         //Variables des trois blocs
         System.out.println("🔍On a un monde représenté par [[0,2,1],[3,5],[6,4]]");

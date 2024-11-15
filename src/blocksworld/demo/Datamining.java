@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Set;
 
 import blocksworld.*;
+import blocksworld.utils.Function;
 import bwgenerator.BWGenerator;
 import datamining.*;
 import modelling.BooleanVariable;

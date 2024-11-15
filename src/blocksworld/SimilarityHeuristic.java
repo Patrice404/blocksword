@@ -106,7 +106,7 @@ public class SimilarityHeuristic implements Heuristic {
         float product = this.product(goal, state);
         float norm1 = this.norm(goal);
         float norm2 = this.norm(state);
-        if (norm1 == 0 || norm2 == 0) return 0; // Avoid division by zero
+        if (norm1 == 0 || norm2 == 0) return 0;
         return product / (norm1 * norm2);
     }
 }
