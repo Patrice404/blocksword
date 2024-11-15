@@ -18,7 +18,7 @@ public class VerificationSatisfactionConstraint1 {
         //Monde créé à la main
         //Variables des trois blocs
         System.out.println("🔍On a un monde représenté par [[1,2],[],[0]]");
-        System.out.println("🔍On crée tous les types de contraintes avec comme ecart 1 pour la contrainte de régularité");
+        System.out.println("🔍On crée tous les types de contraintes : Basiques,Regulières,Croissantes");
 
         Set<Object> domain0 = new HashSet<>();
         domain0.add(-3);domain0.add(-2);domain0.add(-1);domain0.add(1);domain0.add(2);
@@ -59,7 +59,7 @@ public class VerificationSatisfactionConstraint1 {
         Set<Constraint> constraints = new HashSet<>();
         constraints.addAll(new BWBasicConstraintsBuilder(3,3).getConstraints());
         constraints.addAll(new BWCroissanceConstraintsBuilder(3, 3).getConstraints());
-        constraints.addAll(new BWRegularyConstraintsBuilder(3,3,1).getConstraints());
+        constraints.addAll(new BWRegularyConstraintsBuilder(3,3).getConstraints());
         boolean allSatisfied = true;
         for (Constraint constraint : constraints) {
             if(!constraint.isSatisfiedBy(instanciation)){
@@ -71,7 +71,7 @@ public class VerificationSatisfactionConstraint1 {
             System.out.println("Toutes les contraintes sont satisfaites dans ce monde ✅");
         }
 
-       
+       //Deuxième config
         List<List<Integer>> liste = new ArrayList<>();
         List<Integer> stack1 = new ArrayList<>();
         stack1.add(0);stack1.add(1);stack1.add(2);
@@ -87,10 +87,10 @@ public class VerificationSatisfactionConstraint1 {
         System.out.println("🔍On a un monde representé par [[0,1,2],[3,7,6],[4,5]]");
         Map<Variable,Object> blocksWord = Function.listToBwState(liste,8);
        
-        System.out.println("🔍On crée tous les types de contraintes avec comme ecart 1 pour la contrainte de régularité");
+        System.out.println("🔍On crée tous les types de contraintes :Basiques,Regulières,Croissantes\"");
         constraints = new HashSet<>();
         constraints.addAll(new BWBasicConstraintsBuilder(8,3).getConstraints());
-        constraints.addAll(new BWRegularyConstraintsBuilder(8,3,1).getConstraints());
+        constraints.addAll(new BWRegularyConstraintsBuilder(8,3).getConstraints());
         constraints.addAll(new BWCroissanceConstraintsBuilder(8,3).getConstraints());
         allSatisfied = true;
         for (Constraint constraint : constraints) {

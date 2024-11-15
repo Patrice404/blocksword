@@ -13,7 +13,7 @@ import java.util.*;
  * values
  * in a given instantiation.
  */
-public class OnDifferenceConstraint implements Constraint {
+public class DifferenceConstraint implements Constraint {
     private Variable variable1;
     private Variable variable2;
 
@@ -43,7 +43,7 @@ public class OnDifferenceConstraint implements Constraint {
      *                                  {@code variable1} and {@code variable2} are
      *                                  the same.
      */
-    public OnDifferenceConstraint(Variable variable1, Variable variable2) {
+    public DifferenceConstraint(Variable variable1, Variable variable2) {
         if (variable1 == null || variable2 == null) {
             throw new IllegalArgumentException("Variables can't not be null");
         }
@@ -112,13 +112,13 @@ public class OnDifferenceConstraint implements Constraint {
 
     @Override
     public int hashCode() {
-        return this.variable1.hashCode() + this.variable2.hashCode() + OnDifferenceConstraint.class.hashCode();
+        return this.variable1.hashCode() + this.variable2.hashCode() + DifferenceConstraint.class.hashCode();
     }
     
     @Override
     public boolean equals(Object obj) {
-        OnDifferenceConstraint c = (OnDifferenceConstraint) obj;
-        return this.getScope().equals(c.getScope()) && obj.getClass().equals(OnDifferenceConstraint.class);
+        DifferenceConstraint c = (DifferenceConstraint) obj;
+        return this.getScope().equals(c.getScope()) && obj.getClass().equals(DifferenceConstraint.class);
     }
 
 }

@@ -9,14 +9,14 @@ import modelling.*;
 public class CreationConfiguration1 {
     public static void main(String[] args) {
        
-        System.out.println("On cherche une configuration composée de 4 blocks et 3 piles\n" + 
-                        "Contraintes : basiques et de regularités avec écart 2 dans chaque pile\n");
+        System.out.println("On cherche une configuration composée de 6 blocks et 3 piles\n" + 
+                        "Contraintes : basiques et de regularités\n");
         Set<Variable> variables = new HashSet<>();
         Set<Constraint> constraints = new HashSet<>();
 
-        BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(4, 3);
-        BWBasicConstraintsBuilder bwBasicConstraintsBuilder = new BWBasicConstraintsBuilder(4, 3);
-        BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder = new BWRegularyConstraintsBuilder(4, 3, 2);
+        BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(6, 3);
+        BWBasicConstraintsBuilder bwBasicConstraintsBuilder = new BWBasicConstraintsBuilder(6, 3);
+        BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder = new BWRegularyConstraintsBuilder(6, 3);
 
         variables = bwVariablesBuilder.getVariables();
         constraints.addAll(bwBasicConstraintsBuilder.getConstraints());
@@ -29,7 +29,7 @@ public class CreationConfiguration1 {
         System.out.println("🔍 Résultat BacktrackSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 4, "World with BacktrackSolver");
+            Function.afficher(monde, 6, "World with BacktrackSolver");
         } else {
             System.out.println("🔍 Il n'existe pas un état pour ces contraintes");
         }
@@ -42,7 +42,7 @@ public class CreationConfiguration1 {
         System.out.println("🔍 Résultat MACSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 4, "World with MACSolver");
+            Function.afficher(monde, 6, "World with MACSolver");
         } else {
             System.out.println("🔍 Il n'existe pas un état pour ces contraintes");
         }
@@ -60,7 +60,7 @@ public class CreationConfiguration1 {
         System.out.println("🔍 Résultat HeuristicMACSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 4, "World with HeuristicMACSolver");
+            Function.afficher(monde, 6, "World with HeuristicMACSolver");
         } else {
             System.out.println("🔍Il n'existe pas un état pour ces contraintes");
         }

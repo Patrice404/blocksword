@@ -2,7 +2,7 @@ package Tests.modelling;
 
 import modelling.Variable;
 import modelling.BooleanVariable;
-import modelling.OnDifferenceConstraint;
+import modelling.DifferenceConstraint;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,15 +16,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-public class OnDifferenceConstraintTest {
+public class DifferenceConstraintTest {
 
     private Variable block0Variable;
     private Variable block1Variable;
     private Variable block2Variable;
     private BooleanVariable booleanVariable;
     private Variable noBlockVariable;
-    private OnDifferenceConstraint constraint1;
-    private OnDifferenceConstraint constraint2;
+    private DifferenceConstraint constraint1;
+    private DifferenceConstraint constraint2;
 
     private Set<Variable> scope1;
     private Set<Variable> scope2;
@@ -56,8 +56,8 @@ public class OnDifferenceConstraintTest {
         noBlockVariable = new Variable(-4, domain2);
         booleanVariable = new BooleanVariable(-1);
 
-        constraint1 = new OnDifferenceConstraint(block1Variable, block2Variable);
-        constraint2 = new OnDifferenceConstraint(block0Variable, block2Variable);
+        constraint1 = new DifferenceConstraint(block1Variable, block2Variable);
+        constraint2 = new DifferenceConstraint(block0Variable, block2Variable);
 
         scope1 = new HashSet<>();
         scope1.add(block1Variable);
@@ -70,33 +70,33 @@ public class OnDifferenceConstraintTest {
 
     @Test
     public void testConstructor() {
-        OnDifferenceConstraint constraint = new OnDifferenceConstraint(block1Variable, block2Variable);
+        DifferenceConstraint constraint = new DifferenceConstraint(block1Variable, block2Variable);
 
         assertEquals("Le constructeur n'affecte pas bien les variables données en argument", scope1, constraint.getScope());
         assertThrows(
                 "Une exception de type IllegalArgumentException devrait être lancée lorsque l'un des variables est null.",
                 IllegalArgumentException.class,
-                () -> new OnDifferenceConstraint(block1Variable, null));
+                () -> new DifferenceConstraint(block1Variable, null));
 
         assertThrows(
                 "Une exception de type IllegalArgumentException devrait être lancée lorsque l'une des variables n'est pas une variable on d'un bloc.",
                 IllegalArgumentException.class,
-                () -> new OnDifferenceConstraint(noBlockVariable, block1Variable));
+                () -> new DifferenceConstraint(noBlockVariable, block1Variable));
 
         assertThrows(
                 "Une exception de type IllegalArgumentException devrait être lancée lorsque l'une des variables n'est pas une variable on d'un bloc.",
                 IllegalArgumentException.class,
-                () -> new OnDifferenceConstraint(booleanVariable, block1Variable));
+                () -> new DifferenceConstraint(booleanVariable, block1Variable));
 
         assertThrows(
                 "Une exception de type IllegalArgumentException devrait être lancée lorsque l'une des variables n'est pas une variable on d'un bloc.",
                 IllegalArgumentException.class,
-                () -> new OnDifferenceConstraint(block1Variable, noBlockVariable));
+                () -> new DifferenceConstraint(block1Variable, noBlockVariable));
 
         assertThrows(
                 "Une exception de type IllegalArgumentException devrait être lancée lorsque les variables sont identiques.",
                 IllegalArgumentException.class,
-                () -> new OnDifferenceConstraint(block1Variable, block1Variable));
+                () -> new DifferenceConstraint(block1Variable, block1Variable));
     }
 
     @Test

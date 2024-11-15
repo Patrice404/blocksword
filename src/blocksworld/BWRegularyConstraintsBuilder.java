@@ -27,18 +27,16 @@ public class BWRegularyConstraintsBuilder {
      *
      * @param nbBlocks          The total number of blocks in the model.
      * @param nbStacks          The total number of stacks (or piles) in the model.
-     * @param differentExpected The expected difference value to be enforced between
-     *                          blocks as part of the regularity constraint.
+     
      * @throws IllegalArgumentException if the number of blocks is negative or
      *         the number of stacks is zero or negative.
      */
-    public BWRegularyConstraintsBuilder(int nbBlocks, int nbStacks, int differentExpected) {
+    public BWRegularyConstraintsBuilder(int nbBlocks, int nbStacks) {
         if (nbBlocks < 0 || nbStacks < 0 || differentExpected < 0 ) {
             throw new IllegalArgumentException("The number of blocks or stacks cannot be negative.");
         }
         this.nbBlocks = nbBlocks;
         this.nbStacks = nbStacks;
-        this.differentExpected = differentExpected;
 
         // Initialize the variables and constraints
         BWVariablesBuilder bwvariables = new BWVariablesBuilder(nbBlocks, nbStacks);
@@ -59,8 +57,17 @@ public class BWRegularyConstraintsBuilder {
                 for (Variable j : this.variables) {
                     if (Variable.isBlockOnVariable(j)) {
                         if (i.getName()!=j.getName()) {
-                            // Add a RegularyConstraint to enforce the expected difference
-                            this.constraints.add(new RegularyConstraint(i, j, this.differentExpected));
+                            Set<Object> s1 = new HashSet<>();
+                            s1.add(j.getName());
+                            Set<Object> s2 = new HashSet<>(j.getDomain());
+                            s2.remove(i.getName());
+                            for(int k=0; k<this.nbBlocks; k++){
+                                if(Math.abs(k-j.getName())!=Math.abs(i.getName()-j.getName())){
+                                    s2.remove(k);
+                                }
+                            }
+
+                            this.constraints.add(new Implication(i, s1, j, s2));
                         }
                     }
                 }

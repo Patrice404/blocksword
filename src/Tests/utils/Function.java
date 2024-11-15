@@ -9,11 +9,8 @@ import java.util.Set;
 import blocksworld.BWVariablesBuilder;
 import modelling.BooleanVariable;
 import modelling.Constraint;
-import modelling.CroissantConstraint;
-import modelling.FixedConstraint;
-import modelling.FreeConstraint;
-import modelling.OnDifferenceConstraint;
-import modelling.RegularyConstraint;
+import modelling.DifferenceConstraint;
+import modelling.Implication;
 import modelling.Variable;
 
 public class Function {
@@ -52,7 +49,7 @@ public class Function {
         return variables;
     }
 
-    public static Set<Constraint> createCroissanceConstraints(int nbBlocks, int nbStacks) {
+        public static Set<Constraint> createCroissanceConstraints(int nbBlocks, int nbStacks) {
         Set<Constraint> constraints = new HashSet<>();
         Set<Variable> variables = new HashSet<>();
 
@@ -61,19 +58,28 @@ public class Function {
 
         for (Variable i : variables) {
             if (Variable.isBlockOnVariable(i)) {
+                Set<Object> s = new HashSet<>( i.getDomain());
+                for(int k=nbBlocks; k>=(int)i.getName();k--){
+                    s.remove(k);
+                }
+                constraints.add(new Implication(i, i.getDomain(), i, s) );
+
                 for (Variable j : variables) {
-                    if (Variable.isBlockOnVariable(j)) {
-                        if (!i.equals(j)) {
-                            constraints.add(new CroissantConstraint(i, j));
+                    if (Variable.isBlockOnVariable(j) && !i.equals(j) && i.getName()>j.getName()) {
+                        Set<Object> s1 = new HashSet<>();
+                        s1.add(j.getName());
+                        Set<Object> s2 = BWVariablesBuilder.calculDomain(j.getName(), nbBlocks, nbStacks);
+                        for(int k=nbBlocks; k>=(int)j.getName();k--){
+                            s2.remove(k);
                         }
+                        constraints.add(new Implication(i, s1, j, s2) );
                     }
                 }
             }
-
         }
         return constraints;
     }
-
+/* 
     public static Set<Constraint> createRegularyConstraints(int nbBlocks, int nbStacks, int differentExpected) {
         Set<Constraint> constraints = new HashSet<>();
         Set<Variable> variables = new HashSet<>();
@@ -94,7 +100,7 @@ public class Function {
 
         }
         return constraints;
-    }
+    }*/
 
     public static Set<Constraint> createBasicConstraints(int nbBlocks, int nbStacks) {
         Set<Constraint> constraints = new HashSet<>();
@@ -108,7 +114,7 @@ public class Function {
                 for (Variable j : variables) {
                     if (Variable.isBlockOnVariable(j)) {
                         if (!i.equals(j)) {
-                            constraints.add(new OnDifferenceConstraint(i, j));
+                            constraints.add(new DifferenceConstraint(i, j));
                         }
                     }
                 }
@@ -118,12 +124,16 @@ public class Function {
         // Creation des contraintes de type FixedConstraint et FreeConstraint
         for (Variable i : variables) {
             if (Variable.isBlockOnVariable(i)) {
-                // Il s'agit ici donc d'une variable on d'un block
                 for (Variable j : variables) {
                     if (BooleanVariable.isBlockFixedVariable(j) && !i.getName().equals(j.getName())) {
-                        constraints.add(new FixedConstraint(i, j));
-                    } else if (BooleanVariable.isStackFreeVariable(j)) {
-                        constraints.add(new FreeConstraint(i, j));
+                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();s2.add(true);
+                        constraints.add(new Implication(i,s1,j,s2));//new  FixedConstraint(i, j)
+                    }
+                    if (BooleanVariable.isStackFreeVariable(j)) {
+                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();s2.add(false);
+                        constraints.add(new Implication(i,s1,j,s2));//new  FreeConstraint(i, j)
                     }
                 }
             }

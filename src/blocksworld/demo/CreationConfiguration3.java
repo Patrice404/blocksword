@@ -17,7 +17,7 @@ public class CreationConfiguration3 {
         BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(8, 2);
         BWBasicConstraintsBuilder bwBasicConstraintsBuilder = new BWBasicConstraintsBuilder(8, 2);
         BWCroissanceConstraintsBuilder bwCroissanceConstraintsBuilder = new BWCroissanceConstraintsBuilder(8, 2);
-        BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder = new BWRegularyConstraintsBuilder(8, 2, 1);
+        BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder = new BWRegularyConstraintsBuilder(8, 2);
 
         variables.addAll(bwVariablesBuilder.getVariables());
         constraints.addAll(bwBasicConstraintsBuilder.getConstraints());

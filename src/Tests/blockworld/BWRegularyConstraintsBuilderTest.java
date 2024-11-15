@@ -14,7 +14,7 @@ import blocksworld.DataminingVariableBuilder;
 import modelling.Constraint;
 
 public class BWRegularyConstraintsBuilderTest {
-        private BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder1;
+        /*private BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder1;
         private BWRegularyConstraintsBuilder bwRegularyConstraintsBuilder2;
         private Set<Constraint> constraints1;
         private Set<Constraint> constraints2;
@@ -89,6 +89,6 @@ public class BWRegularyConstraintsBuilderTest {
                                 bwRegularyConstraintsBuilder1.getDifferentExpected() == 1);
                 assertTrue("La méthode ne retourne pas la bonne valeur",
                                 bwRegularyConstraintsBuilder2.getDifferentExpected() == 2);
-        }
+        }*/
 
 }

@@ -28,7 +28,7 @@ public class VerificationSatisfactionConstraint2 {
        
         Set<Constraint> constraints = new HashSet<>();
         constraints.addAll(new BWBasicConstraintsBuilder(7,3).getConstraints());
-        constraints.addAll(new BWRegularyConstraintsBuilder(7,3,2).getConstraints());
+        constraints.addAll(new BWRegularyConstraintsBuilder(7,3).getConstraints());
         constraints.addAll(new BWCroissanceConstraintsBuilder(7,3).getConstraints());
         boolean allSatisfied = true;
         for (Constraint constraint : constraints) {

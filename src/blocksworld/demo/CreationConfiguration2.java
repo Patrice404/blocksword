@@ -13,9 +13,9 @@ public class CreationConfiguration2 {
                         " Contraintes : basiques et croissantes\n");
         Set<Variable> variables = new HashSet<>();
         Set<Constraint> constraints = new HashSet<>();
-        BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(5, 2);
-        BWBasicConstraintsBuilder bwBasicConstraintsBuilder = new BWBasicConstraintsBuilder(5, 2);
-        BWCroissanceConstraintsBuilder bwCroissanceConstraintsBuilder = new BWCroissanceConstraintsBuilder(5, 2);
+        BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(6, 3);
+        BWBasicConstraintsBuilder bwBasicConstraintsBuilder = new BWBasicConstraintsBuilder(6, 3);
+        BWCroissanceConstraintsBuilder bwCroissanceConstraintsBuilder = new BWCroissanceConstraintsBuilder(6, 3);
 
         variables.addAll(bwVariablesBuilder.getVariables());
         constraints.addAll(bwBasicConstraintsBuilder.getConstraints());
@@ -28,7 +28,7 @@ public class CreationConfiguration2 {
         System.out.println("🔍 Résultat MACSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 5, "Monde MACSolver");
+            Function.afficher(monde, 6, "Monde MACSolver");
         } else {
             System.out.println("🔍Il n'existe pas un état pour ces contriantes");
         }
@@ -40,7 +40,7 @@ public class CreationConfiguration2 {
         System.out.println("🔍 Résultat BacktrackSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 5, "Monde BacktrackSolver");
+            Function.afficher(monde, 6, "Monde BacktrackSolver");
         } else {
             System.out.println("🔍Il n'existe pas un état pour ces contriantes");
         }
@@ -58,7 +58,7 @@ public class CreationConfiguration2 {
         System.out.println("🔍 Résultat HeuristicMACSolver");
         System.out.println("⏱️  Temps d'exécution : " + (end - start) + " ms\n");
         if (monde != null) {
-            Function.afficher(monde, 5, "HeuristicMACSolver");
+            Function.afficher(monde, 6, "HeuristicMACSolver");
         } else {
             System.out.println("🔍Il n'existe pas un état pour ces contriantes");
         }

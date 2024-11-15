@@ -47,11 +47,23 @@ public class BWCroissanceConstraintsBuilder {
         
         for (Variable i : this.variables) {
             if (Variable.isBlockOnVariable(i)) {
-                for (Variable j : this.variables) {
-                    if (Variable.isBlockOnVariable(j) && !i.equals(j)) {
-                        this.constraints.add(new CroissantConstraint(i, j));
-                    }
+                Set<Object> s = new HashSet<>( i.getDomain());
+                for(int k=nbBlocks; k>=(int)i.getName();k--){
+                    s.remove(k);
                 }
+                this.constraints.add(new Implication(i, i.getDomain(), i, s) );
+
+               /* for (Variable j : this.variables) {
+                    if (Variable.isBlockOnVariable(j) && !i.equals(j) && i.getName()>j.getName()) {
+                        Set<Object> s1 = new HashSet<>();
+                        s1.add(j.getName());
+                        Set<Object> s2 = BWVariablesBuilder.calculDomain(j.getName(), nbBlocks, nbStacks);
+                        for(int k=nbBlocks; k>=(int)j.getName();k--){
+                            s2.remove(k);
+                        }
+                        this.constraints.add(new Implication(i, s1, j, s2) );
+                    }
+                }*/
             }
         }
     }

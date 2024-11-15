@@ -59,7 +59,7 @@ public class BWBasicConstraintsBuilder {
             if (Variable.isBlockOnVariable(i)) {
                 for (Variable j : this.variables) {
                     if (Variable.isBlockOnVariable(j) && !i.equals(j)) {
-                        this.constraints.add(new OnDifferenceConstraint(i, j));
+                        this.constraints.add(new DifferenceConstraint(i, j));
                     }
                 }
             }
@@ -70,10 +70,14 @@ public class BWBasicConstraintsBuilder {
             if (Variable.isBlockOnVariable(i)) {
                 for (Variable j : this.variables) {
                     if (BooleanVariable.isBlockFixedVariable(j) && !i.getName().equals(j.getName())) {
-                        this.constraints.add(new FixedConstraint(i, j));
+                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();s2.add(true);
+                        this.constraints.add(new Implication(i,s1,j,s2));//new  FixedConstraint(i, j)
                     }
                     if (BooleanVariable.isStackFreeVariable(j)) {
-                        this.constraints.add(new FreeConstraint(i, j));
+                        Set<Object> s1 = new HashSet<>();s1.add(j.getName());
+                        Set<Object> s2 = new HashSet<>();s2.add(false);
+                        this.constraints.add(new Implication(i,s1,j,s2));//new  FreeConstraint(i, j)
                     }
                 }
             }
