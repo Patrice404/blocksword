@@ -9,10 +9,8 @@ import modelling.*;
 
 public class CreationConfiguration3 {
     public static void main(String[] args) {
-        System.out.println("On cherche à créer une configuration ayant 2 pile et 8 block avec les\n" + 
-                        "contraints basiques, de croissance et de régularité avec comme écart de 1\n" + //
-                        "entre chaque bloc sur toutes les piles\n");
-
+        System.out.println("On cherche à créer une configuration ayant 2 pile et 8 block \n Contrainte : basiques, croissance et regulière");
+                        
         Set<Variable> variables = new HashSet<>();
         Set<Constraint> constraints = new HashSet<>();
         BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(8, 2);

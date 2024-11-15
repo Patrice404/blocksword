@@ -10,8 +10,7 @@ import modelling.*;
 public class CreationConfiguration1 {
     public static void main(String[] args) {
        
-        System.out.println("On cherche une configuration composée de 6 blocks et 3 piles\n" + 
-                        "Contraintes : basiques et de regularités\n");
+        System.out.println("On cherche une configuration composée de 6 blocks et 3 piles \n Contraintes : basiques et regulière\n");
         Set<Variable> variables = new HashSet<>();
         Set<Constraint> constraints = new HashSet<>();
 

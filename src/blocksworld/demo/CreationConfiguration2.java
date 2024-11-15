@@ -10,8 +10,7 @@ import modelling.*;
 public class CreationConfiguration2 {
     public static void main(String[] args) {
 
-        System.out.println(" On cherche une configuration de 5 blocks et 2 piles\n" + //
-                        " Contraintes : basiques et croissantes\n");
+        System.out.println(" On cherche une configuration de 5 blocks et 2 piles\n  Contraintes : basiques et croissantes\n");
         Set<Variable> variables = new HashSet<>();
         Set<Constraint> constraints = new HashSet<>();
         BWVariablesBuilder bwVariablesBuilder = new BWVariablesBuilder(6, 3);
