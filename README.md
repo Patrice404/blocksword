@@ -6,7 +6,7 @@ Se placer dans le dossier et lancer les commandes suivantes:
     - javac -d ../build -cp ../lib/bwgenerator.jar:../lib/blocksworld.jar planning/utils/*.java planning/*.java modelling/*.java datamining/*.java cp/*.java blocksworld/*.java blocksworld/utils/*.java blocksworld/*.java blocksworld/demo/*.java
     - 
 # Exécution des démos
-    # Verification satisfaction de contrainte
+    # Vérification satisfaction de contrainte
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.VerificationSatisfactionConstraint1
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.VerificationSatisfactionConstraint2
     
@@ -20,6 +20,6 @@ Se placer dans le dossier et lancer les commandes suivantes:
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Planning2
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Planning3
     
-    #Datamining
+    # Datamining
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Datamining
   
