@@ -13,9 +13,9 @@ import modelling.BooleanVariable;
 
 public class Datamining {
     public static void main(String[] args) {
-        int n = 10;
-        BWGenerator bwGenerator = new BWGenerator(4,2);
-        DataminingVariableBuilder dataminingVariableBuilder = new DataminingVariableBuilder(4, 2);
+        int n = 100000;
+        BWGenerator bwGenerator = new BWGenerator(20,6);
+        DataminingVariableBuilder dataminingVariableBuilder = new DataminingVariableBuilder(20, 6);
          Map<BooleanVariable, String>  mapping = dataminingVariableBuilder.getMapping();
         BooleanDatabase db = new BooleanDatabase(dataminingVariableBuilder.getVariables());
         Random random = new Random();
@@ -26,8 +26,8 @@ public class Datamining {
             db.add(state);
         }
         Apriori apriori = new Apriori(db);
-        float minFrequency = 0.5f;
-        float minConfiance = 0.3f;
+        float minFrequency = 0.66f;
+        float minConfiance = 0.95f;
         Set<Itemset> itemFrequent = apriori.extract(minFrequency);
         System.out.println("MOTIF DE FREQUENCE += 2/3");
         Function.showFrequentItem(itemFrequent, mapping);

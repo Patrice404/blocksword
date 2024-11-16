@@ -88,8 +88,8 @@ public class Planning1 {
         System.out.println("🚀 Nombre d'actions dans le plan : " + plan.size());
         System.out.println("⏳ Nombre de noeuds explorés : " + dijkstraPlanner.getNbNoeudExplore() + "\n");
 
-        MisplacedBlock misplacedBlockHeurostic = new MisplacedBlock(goal);
-        WellplacedBlock wellplacedBlockHeuristic2 = new WellplacedBlock(goal);
+        MisplacedBlockHeuristic misplacedBlockHeurostic = new MisplacedBlockHeuristic(goal);
+        WellplacedBlockHeuristic wellplacedBlockHeuristic2 = new WellplacedBlockHeuristic(goal);
         SimilarityHeuristic similarityHeuristic = new SimilarityHeuristic(goalState, 1);
 
         AStarPlanner aStarPlanner2 = new AStarPlanner(initState, actions, goal,misplacedBlockHeurostic);
