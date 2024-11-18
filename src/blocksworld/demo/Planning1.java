@@ -103,6 +103,7 @@ public class Planning1 {
         System.out.println("⏳ Nombre de noeuds explorés : " +
                 aStarPlanner2.getNbNoeudExplore() + "\n");
         Function.displayPlan(initState, 5, plan);
+        System.out.println("Ci dessous le plan exécuté \n\n");
         System.out.println(plan);
 
     }

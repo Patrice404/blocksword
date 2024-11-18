@@ -49,7 +49,7 @@ public class HeuristicMACSolver extends AbstractSolver {
         Map<Variable, Set<Object>> domains = new HashMap<>();
         LinkedList<Variable> variables = new LinkedList<>();
         for (Variable variable : this.variables) {
-            domains.put(variable, variable.getDomain());
+            domains.put(variable, new HashSet(variable.getDomain()));
             variables.push(variable);
         }
         return this.MAC(instanciationPartielle, variables, domains);

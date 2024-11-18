@@ -1,5 +1,6 @@
 package blocksworld.utils;
 
+import java.awt.Dimension;
 import java.util.*;
 
 import javax.swing.*;
@@ -100,6 +101,8 @@ public class Function {
     public static void displayPlan(Map<Variable, Object> initState, int nbBlocks, List<Action> plan) {
         BWIntegerGUI gui = new BWIntegerGUI(nbBlocks);
         JFrame frame = new JFrame("Blocks World");
+        frame.setMinimumSize(new Dimension(500,500));
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         BWState<Integer> bwState = Function.makeBWStateForGUI(initState, nbBlocks);
@@ -133,7 +136,7 @@ public class Function {
         BWIntegerGUI gui = new BWIntegerGUI(nbBlocks);
         JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
+        frame.setMinimumSize(new Dimension(500,500));
         frame.add(gui.getComponent(state));
         frame.pack();
         frame.setVisible(true);
