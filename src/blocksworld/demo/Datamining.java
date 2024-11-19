@@ -13,10 +13,12 @@ import modelling.BooleanVariable;
 
 public class Datamining {
     public static void main(String[] args) {
-        int n = 10;
+        System.out.println("DATAMINING");
+        System.out.println("15 Mondes de 10 blocs et 3 piles générés aléatoirement");
+        int n = 15;
         BWGenerator bwGenerator = new BWGenerator(10,3);
         DataminingVariableBuilder dataminingVariableBuilder = new DataminingVariableBuilder(10, 3);
-         Map<BooleanVariable, String>  mapping = dataminingVariableBuilder.getMapping();
+        Map<BooleanVariable, String>  mapping = dataminingVariableBuilder.getMapping();
         BooleanDatabase db = new BooleanDatabase(dataminingVariableBuilder.getVariables());
         Random random = new Random();
         List<List<Integer>> stateListe = null;
