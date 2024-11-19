@@ -13,9 +13,9 @@ import modelling.BooleanVariable;
 
 public class Datamining {
     public static void main(String[] args) {
-        int n = 100000;
-        BWGenerator bwGenerator = new BWGenerator(20,6);
-        DataminingVariableBuilder dataminingVariableBuilder = new DataminingVariableBuilder(20, 6);
+        int n = 10;
+        BWGenerator bwGenerator = new BWGenerator(10,3);
+        DataminingVariableBuilder dataminingVariableBuilder = new DataminingVariableBuilder(10, 3);
          Map<BooleanVariable, String>  mapping = dataminingVariableBuilder.getMapping();
         BooleanDatabase db = new BooleanDatabase(dataminingVariableBuilder.getVariables());
         Random random = new Random();

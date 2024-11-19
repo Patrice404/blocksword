@@ -21,7 +21,6 @@ Se placer dans le dossier src et lancer les commandes suivantes:
     # Planning
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Planning1
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Planning2
-    - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Planning3
     
     # Datamining
     - java -cp ../build:../lib/blocksworld.jar  blocksworld. demo.Datamining

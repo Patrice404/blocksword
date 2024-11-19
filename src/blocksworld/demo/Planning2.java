@@ -7,7 +7,7 @@ import blocksworld.utils.Function;
 import modelling.*;
 import planning.*;
 
-public class Planning3 {
+public class Planning2 {
     public static void main(String[] args) {
         // Init [[2,4],[5,1,3],[0]]
         System.out.println("Init :  [[2,4],[1,3],[0]]");
@@ -90,8 +90,18 @@ public class Planning3 {
         System.out.println("⏳ Nombre de noeuds explorés : " + dijkstraPlanner.getNbNoeudExplore() + "\n");
 
         MisplacedBlockHeuristic misplacedBlockHeurostic = new MisplacedBlockHeuristic(goal);
-        WellplacedBlockHeuristic wellplacedBlockHeuristic2 = new WellplacedBlockHeuristic(goal);
-        SimilarityHeuristic similarityHeuristic = new SimilarityHeuristic(goalState, 1);
+        SimilarityHeuristic similarityHeuristic = new SimilarityHeuristic(goalState, -2);
+
+        AStarPlanner aStarPlanner1 = new AStarPlanner(initState, actions, goal,similarityHeuristic);
+        aStarPlanner1.activateNodeCount(true);
+        start = System.currentTimeMillis();
+        plan = aStarPlanner1.plan();
+        fin = System.currentTimeMillis();
+        System.out.println("🔍 Résultat AStarPlanner avec l'heuristique de similarité");
+        System.out.println("⏱️  Temps d'exécution : " + (fin - start) + "ms");
+        System.out.println("🚀 Nombre d'actions dans le plan : " + plan.size());
+        System.out.println("⏳ Nombre de noeuds explorés : " +
+        aStarPlanner1.getNbNoeudExplore() + "\n");
 
         AStarPlanner aStarPlanner2 = new AStarPlanner(initState, actions, goal,misplacedBlockHeurostic);
         aStarPlanner2.activateNodeCount(true);
