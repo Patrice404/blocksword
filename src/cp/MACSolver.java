@@ -40,7 +40,7 @@ public class MACSolver extends AbstractSolver {
         LinkedList<Variable> variables = new LinkedList<>();
         
         for (Variable variable : this.variables) {
-            domains.put(variable, new HashSet(variable.getDomain()));
+            domains.put(variable, variable.getDomain());
             variables.push(variable);
         }
         
